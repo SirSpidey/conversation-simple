@@ -4,19 +4,19 @@
 
 This Node.js app demonstrates the Conversation service in a simple chat interface simulating a cognitive car dashboard.
 
-View a [demo][demo_url] of this app.
+You can view a [demo][demo_url] of this app.
 
 ## Before you begin
 
-* Create a Bluemix Account
+* Create a Bluemix account
     * [Sign up][sign_up] in Bluemix, or use an existing account. Your account must have available space for at least 1 app and 1 service.
 * Make sure that you have the following prerequisites installed:
     * The [Node.js][node_link] runtime (including the [npm][npm_link] package manager)
     * The [Cloud Foundry][cloud_foundry] command-line client
 
-## Running locally
+## Installing locally
 
-If you want to modify the app or use it as a basis for building your own app, run it in your own environment. You can then deploy your modified version of the app to the Bluemix cloud.
+If you want to modify the app or use it as a basis for building your own app, install it locally. You can then deploy your modified version of the app to the Bluemix cloud.
 
 ### Getting the files
 
@@ -26,21 +26,15 @@ Use GitHub to clone the repository locally, or [download the .zip file](https://
 
 1. At the command line, go to the local project directory (`conversation-simple`).
 
-1. Connect to Bluemix with the Cloud Found command line tool. For more information, see the Watson Developer Cloud [documentation][cf_docs].
+1. Connect to Bluemix with the Cloud Foundry command-line tool. For more information, see the Watson Developer Cloud [documentation][cf_docs].
 
-1. Create an instance of the Conversation service in Bluemix: For example,
+1. Create an instance of the Conversation service in Bluemix. For example:
 
     ```bash
     cf create-service Conversation free conversation-simple-demo-test1
     ```
 
-1. Create a service key in the format `cf create-service-key <service_instance> <service_key>`. For example,
-
-    ```bash
-    cf create-service-key conversation-simple-demo-test1 conversation-simple-demo-test1-key1
-    ```
-
-#### Importing the Conversation workspace
+### Importing the Conversation workspace
 
 1. In your browser, navigate to your Bluemix console.
 
@@ -48,7 +42,7 @@ Use GitHub to clone the repository locally, or [download the .zip file](https://
 
     ![Screen capture of Services list](readme_images/conversation_service.png)
 
-1. Click the **Launch tool** button in the Service Details page.
+1. On the Service Details page, click **Launch tool**.
 
 1. Click **Import** in the Conversation service tool. Specify the location of the workspace JSON file in your local copy of the app project:
 
@@ -56,11 +50,17 @@ Use GitHub to clone the repository locally, or [download the .zip file](https://
 
 1. Select **Everything (Intents, Entities, and Dialog)** and then click **Import**. The car dashboard workspace is created.
 
-#### Configuring the app environment
+### Configuring the app environment
 
 1. Copy the `.env.example` file to a new `.env` file.
 
-1. Retrieve the credentials from the service key in the format `cf service-key <service_instance> <service_key>`. For example,
+1. Create a service key in the format `cf create-service-key <service_instance> <service_key>`. For example:
+
+    ```bash
+    cf create-service-key conversation-simple-demo-test1 conversation-simple-demo-test1-key1
+    ```
+
+1. Retrieve the credentials from the service key using the command `cf service-key <service_instance> <service_key>`. For example:
 
     ```bash
     cf service-key conversation-simple-demo-test1 conversation-simple-demo-test1-key1
@@ -76,16 +76,12 @@ Use GitHub to clone the repository locally, or [download the .zip file](https://
     }
     ```
 
-1. Paste  the `password` and `username` values (without quotation marks) from the JSON into the `CONVERSATION_PASSWORD` and `CONVERSATION_USERNAME` variables in the `.env` file. For example,
+1. Paste  the `password` and `username` values (without quotation marks) from the JSON into the `CONVERSATION_PASSWORD` and `CONVERSATION_USERNAME` variables in the `.env` file. For example:
 
     ```
     CONVERSATION_USERNAME=ca2905e6-7b5d-4408-9192-e4d54d83e604
     CONVERSATION_PASSWORD=87iT7aqpvU7l
     ```
-    
-    Leave the `.env` file open.
-
-
 
 1. In your Bluemix console, open the Conversation service instance where you imported the workspace.
 
@@ -97,7 +93,7 @@ Use GitHub to clone the repository locally, or [download the .zip file](https://
 
 1. On the local system, paste the workspace ID into the WORKSPACE_ID variable in the `.env` file. Save and close the file.
 
-#### Installing and running
+### Installing and starting the app
 
 1. Install the demo app package into the local Node.js runtime environment:
 
@@ -113,11 +109,11 @@ Use GitHub to clone the repository locally, or [download the .zip file](https://
 
 1. Point your browser to http://localhost:3000 to try out the app.
 
-### Test the app
+## Testing the app
 
 After your app is installed and running, experiment with it to see how it responds.
 
-The chat interface is on the left, and the JSON that the JavaScript code receives from the server is on the right. Your questions and commands are interpreted using a small set of sample data trained with the following intents:
+The chat interface is on the left, and the JSON that the JavaScript code receives from the Conversation service is on the right. Your questions and commands are interpreted using a small set of sample data trained with the following intents:
 
     turn_on
     turn_off
@@ -131,8 +127,7 @@ The chat interface is on the left, and the JSON that the JavaScript code receive
     greetings
     goodbyes
     
-
-Type a request, such as `music on` or `I want to turn on the windshield wipers`, and the system understands your intent and responds. You can see the details of how your input was understood by examining the JSON data in the `Watson understands` section on the right side.
+Type a request, such as `music on` or `I want to turn on the windshield wipers`. The system understands your intent and responds. You can see the details of how your input was understood by examining the JSON data in the `Watson understands` section on the right side.
 
 For example, if you type `Turn on some music`, the JSON data shows that the system understood the `turn_on` intent with a high level of confidence, along with the `appliance` entity with a value of `music`.
 
@@ -140,7 +135,7 @@ For more information about intents, see the [Conversation service documentation]
 
 To see details of how these intents are defined, including sample input for each intent, launch the Conversation tool.
 
-### Modify the app
+## Modifying the app
 
 After you have the app deployed and running, you can explore the source files and make changes. Try the following:
 
@@ -187,7 +182,7 @@ You can use Cloud Foundry to deploy your local version of the app to Bluemix.
 
     Access your app on Bluemix at the URL specified in the command output.
 
-# Troubleshooting
+## Troubleshooting
 
 If you encounter a problem, you can check the logs for more information. To see the logs, run the `cf logs` command:
 
@@ -195,12 +190,12 @@ If you encounter a problem, you can check the logs for more information. To see 
 cf logs <application-name> --recent
 ```
 
-# License
+## License
 
   This sample code is licensed under Apache 2.0.
   Full license text is available in [LICENSE](LICENSE).
 
-# Contributing
+## Contributing
 
   See [CONTRIBUTING](CONTRIBUTING.md).
 
